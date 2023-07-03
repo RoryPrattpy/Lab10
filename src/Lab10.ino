@@ -1,18 +1,22 @@
-/*
- * Project Lab10
- * Description:
- * Author:
- * Date:
- */
+SYSTEM_MODE(MANUAL);
+SYSTEM_THREAD(ENABLED);
 
-// setup() runs once, when the device is first turned on.
 void setup() {
-  // Put initialization like pinMode and begin functions here.
+  Serial.begin(9600);
+  while(!Serial.isConnected()){
+    Serial.println("Attach the argon onto the computer.");
+  }
 
+  Serial1.begin(9600);
 }
 
-// loop() runs over and over again, as quickly as it can execute.
 void loop() {
-  // The core of your code will likely live here.
-
+  if (Serial.available() > 0) {
+      char value = Serial.read(); //reads the data from computer
+      Serial1.print(value); //sending the value to argon2
+  }
+  if (Serial1.available() > 0) {
+    char value = Serial1.read();
+    Serial.print(value);
+  }
 }
